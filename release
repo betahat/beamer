@@ -1,0 +1,33 @@
+#!/usr/bin/env sos-runner
+#fileformat=SOS1.0
+
+parameter: theme = path('themes/metro.tex')
+parameter: notebook = path()
+
+[1]
+depends: Py_Module('ipyrmd')
+fail_if(not notebook.is_file(), msg = 'Need input parameter ``--notebook``')
+input: notebook
+output: f'{_input:n}.md'
+run: expand = True
+     ipyrmd --from ipynb --to Rmd -y -o {_output} {_input}
+
+[2]
+depends: executable('pandoc')
+output: f'{_input:n}.tex'
+run: expand = True
+     pandoc -t beamer --template {theme} -s -o {_output} {_input}
+
+[3]
+depends: executable('pdflatex')
+output: f'{_input:n}.pdf'
+run: expand = True
+     pdflatex {_input} -output-directory={_input:d}
+     pdflatex {_input} -output-directory={_input:d}
+     bibtex {_input!n}.aux
+     pdflatex {_input} -output-directory={_input:d}
+
+[4]
+run:
+  cd {_input:d}
+  rm -f *.aux *.bbl *.blg *.log *.out

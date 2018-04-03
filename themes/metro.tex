@@ -1,98 +1,30 @@
+% %\documentclass[handout]{beamer}
+% \documentclass[evncountsect]{beamer}
+% \usepackage{amsmath,algorithm,algorithmic,graphicx,amsfonts,amsthm,color,pgf,tikz,wrapfig,amsfonts,multicol,wasysym,animate}
+% \usepackage[absolute,overlay]{textpos}
+% \usetikzlibrary{arrows}
+% \beamertemplatenavigationsymbolsempty
+% \setbeamercovered{transparent = 0}
+% \useoutertheme[subsection=false]{miniframes}
+% \bibliographystyle{apalike}
+% \setlength{\fboxrule}{1pt}
 \documentclass[professionalfont, 12pt, default]{beamer}
-\usetheme{Antibes}
+% available at https://github.com/matze/mtheme
+% should be found in /usr/share/texlive/texmf-dist/tex/latex/beamertheme-metropolis
+\beamertemplatenavigationsymbolsempty
+\setbeamercovered{transparent = 0}
+%\setbeamercovered{dynamic} % slightly displaying not highlight
+\useoutertheme[subsection=false]{miniframes}
+\usetheme{metropolis}
 
-\makeatletter
-\def\Hline{%
-  \noalign{\ifnum0=`}\fi\hrule \@height 0.8pt \futurelet
-\reserved@a\@xhline}
-\makeatother
-
-%%% HEADER
-\makeatletter
-\setbeamercolor{title in head/foot}{fg=white,bg=black}
-\setbeamertemplate{headline}
-{%
-    \begin{beamercolorbox}[wd=1.01\paperwidth,colsep=1.5pt]{upper separation line head}
-    \end{beamercolorbox}
-    \begin{beamercolorbox}[wd=1.01\paperwidth,ht=2.5ex,dp=1.125ex,%
-      leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}
-      \usebeamerfont{title in head/foot}\insertshorttitle
-    \end{beamercolorbox}
-    \begin{beamercolorbox}[wd=1.01\paperwidth,ht=2.5ex,dp=1.125ex,%
-      leftskip=.3cm,rightskip=.3cm plus1fil]{section in head/foot}
-      \usebeamerfont{section in head/foot}%
-      \ifbeamer@tree@showhooks
-        \setbox\beamer@tempbox=\hbox{\insertsectionhead}%
-        \ifdim\wd\beamer@tempbox>1pt%
-          \hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}%
-          \hskip1pt%
-        \fi%
-      \else%  
-        \hskip6pt%
-      \fi%
-      \insertsectionhead
-      \usebeamerfont{subsection in head/foot}%
-      \ifbeamer@tree@showhooks
-        \setbox\beamer@tempbox=\hbox{\insertsubsectionhead}%
-        \ifdim\wd\beamer@tempbox>1pt%
-          \ \raise1.9pt\hbox{\vrule width 5pt height0.4pt}%
-          \hskip1pt%
-        \fi%
-      \else%  
-        \hskip12pt%
-      \fi%
-      \insertsubsectionhead
-    \end{beamercolorbox}
-}
-\makeatother
-
-%%% FOOTER
-\makeatother
-\setbeamertemplate{footline}
-{
-  \dimen0=1.1\paperwidth
-  \newcount\p
-  \newcount\q
-  \p=\insertframenumber
-  \q=\inserttotalframenumber
-  \advance\p by -1
-  \advance\q by -1
-  \ifnum\q=0
-    \q=1
-  \fi
-  \multiply\dimen0 by \the\p
-  \divide\dimen0 by \the \q
-  %\multiply\dimen0 by \insertframenumber
-  %\divide\dimen0 by \inserttotalframenumber
-  \edef\progressbarwidth{\the\dimen0}
-  \leavevmode%
-  \setbeamercolor{progress outer}{fg=white, bg=white}
-  \setbeamercolor{progress bar}{bg=pink!90!white}
-  \begin{beamercolorbox}[wd=1.1\paperwidth,ht=0.25ex,dp=1ex]{progress outer}
-    \begin{beamercolorbox}[wd=\progressbarwidth,ht=0.25ex,dp=1ex]{progress bar}
-    \end{beamercolorbox}%
-  \end{beamercolorbox}%
-}
-\makeatletter
-
-\usecolortheme{beaver}
 \usepackage{mathpazo}
 \usepackage{longtable}
 \usepackage[fontset=windowsnew,UTF8]{ctex}
 
-\setbeamertemplate{navigation symbols}{
-  \setbeamercolor{footline}{fg=pink!90!white}
-  \usebeamerfont{footline}%
-  \usebeamercolor[fg]{footline}%
-  \fontsize{2.8em}{0.8em}\selectfont
-  \rotatebox{90}{\insertframenumber}
-  \hspace{-0.8em}
-}
 %\setbeamertemplate{footline}[page number]
 
 \setbeamercolor{structure}{fg=white!20!gray}
 \mathversion{bold}
-\setbeamercovered{dynamic} % slightly displaying not highlight
 \usepackage{graphicx}
 \usepackage{amsmath, amssymb, cite, url}
 \usepackage{etex}

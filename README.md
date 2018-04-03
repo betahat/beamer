@@ -19,6 +19,9 @@ see `sample/*.pdf`
 - Ponde2
     - color scheme is Execushares (partially)
     - not dependent as possible as on tikz
+- Pondering
+- novel
+- Beamer-Theme-Metropolis
 
 # LICENSE
 

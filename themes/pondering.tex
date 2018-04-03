@@ -2,7 +2,7 @@
     $if(aspectratio)$
     aspectratio=$aspectratio$,
     $endif$
-    professionalfont, $if(fontsize)$$fontsize$,$endif$ dvipdfmx, default, cjk]{beamer}
+    professionalfont, $if(fontsize)$$fontsize$,$endif$ default]{beamer}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -13,6 +13,7 @@
 \usepackage{amsmath, amssymb, cite, url}
 \usepackage{etex}
 \usepackage{longtable}
+\usepackage[fontset=windowsnew,UTF8]{ctex}
 
 \setbeamercovered{dynamic} % slightly displaying not highlight
 
@@ -20,7 +21,6 @@
 \usepackage{mathpazo} % \rmdefault is defined
 \renewcommand{\sfdefault}{pag} % pag phv
 \renewcommand{\ttdefault}{pcr}
-\renewcommand{\kanjifamilydefault}{\gtdefault}
 \mathversion{bold}
 
 \makeatletter
