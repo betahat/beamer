@@ -21,13 +21,15 @@ run: expand = True
 [3]
 depends: executable('pdflatex')
 output: f'{_input:n}.pdf'
-run: expand = True
-     pdflatex {_input} -output-directory={_input:d}
-     pdflatex {_input} -output-directory={_input:d}
-     bibtex {_input!n}.aux
-     pdflatex {_input} -output-directory={_input:d}
+run: expand = True, stdout = f'{_input:n}.err'
+     pdflatex -output-directory={_input:d} {_input} 
+     pdflatex -output-directory={_input:d} {_input} 
+     if [ -f "{_input:n}bib*" ]; then
+        openout_any=a bibtex {_input:n}.aux
+        pdflatex -output-directory={_input:d} {_input}
+     fi
 
 [4]
-run:
-  cd {_input:d}
-  rm -f *.aux *.bbl *.blg *.log *.out
+to_remove = paths([f'{_input:n}.' + x for x in ['aux', 'bbl', 'blg', 'log', 'out', 'err', 'nav', 'snm', 'toc', 'vrb']])
+run: expand = True
+  rm -f {to_remove}
