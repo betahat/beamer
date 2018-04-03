@@ -21,7 +21,7 @@ run: expand = True
 [3]
 depends: executable('pdflatex')
 output: f'{_input:n}.pdf'
-run: expand = True, stdout = f'{_input:n}.err'
+run: expand = True
      pdflatex -output-directory={_input:d} {_input} 
      pdflatex -output-directory={_input:d} {_input} 
      if [ -f "{_input:n}bib*" ]; then
@@ -30,6 +30,6 @@ run: expand = True, stdout = f'{_input:n}.err'
      fi
 
 [4]
-to_remove = paths([f'{_input:n}.' + x for x in ['aux', 'bbl', 'blg', 'log', 'out', 'err', 'nav', 'snm', 'toc', 'vrb']])
+to_remove = paths([f'{_input:n}.' + x for x in ['aux', 'bbl', 'blg', 'log', 'out', 'nav', 'snm', 'toc', 'vrb']])
 run: expand = True
   rm -f {to_remove}
