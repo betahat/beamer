@@ -24,7 +24,7 @@ output: f'{_input:n}.pdf'
 run: expand = True
      pdflatex -output-directory={_input:d} {_input} 
      pdflatex -output-directory={_input:d} {_input} 
-     if [ -f "{_input:n}bib*" ]; then
+     if [ -f "{_input:n}.bib" ]; then
         openout_any=a bibtex {_input:n}.aux
         pdflatex -output-directory={_input:d} {_input}
      fi
