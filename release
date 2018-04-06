@@ -3,12 +3,13 @@
 
 parameter: theme = path('themes/metro.tex')
 parameter: notebook = path()
+beamer = '' if f'{theme:b}' == 'labnotes.tex' else '-t beamer'
 
 [1]
 depends: Py_Module('ipyrmd')
 fail_if(not notebook.is_file(), msg = 'Need input parameter ``--notebook``')
 input: notebook
-output: f'{_input:n}.md'
+output: f'{_input:n}.md' if beamer else f'{_input:n}.print.md'
 run: expand = True
      ipyrmd --from ipynb --to Rmd -y -o {_output} {_input}
 
@@ -16,20 +17,20 @@ run: expand = True
 depends: executable('pandoc')
 output: f'{_input:n}.tex'
 run: docker_image = "gaow/debian-texlive", expand = True
-     pandoc -t beamer --template {theme} -s -o {_output} {_input}
+     pandoc {beamer} --template {theme} -s -o {_output} {_input}
 
 [3]
 depends: executable('pdflatex')
 output: f'{_input:n}.pdf'
 run: docker_image = "gaow/debian-texlive", expand = True
-     pdflatex -output-directory={_input:d} {_input} 
-     pdflatex -output-directory={_input:d} {_input} 
+     pdflatex -shell-escape -output-directory={_input:d} {_input}
+     pdflatex -shell-escape -output-directory={_input:d} {_input}
      if [ -f "{_input:n}.bib" ]; then
         openout_any=a bibtex {_input:n}.aux
-        pdflatex -output-directory={_input:d} {_input}
+        pdflatex -shell-escape -output-directory={_input:d} {_input}
      fi
 
 [4]
-to_remove = paths([f'{_input:n}.' + x for x in ['aux', 'bbl', 'blg', 'log', 'out', 'nav', 'snm', 'toc', 'vrb']])
+to_remove = paths([f'{_input:n}.' + x for x in ['aux', 'bbl', 'blg', 'log', 'out', 'nav', 'snm', 'toc', 'vrb', 'spl']] + [f'{_input:d}/_minted-{_input:bn}'])
 run: expand = True
-  rm -f {to_remove}
+  rm -rf {to_remove}
