@@ -15,13 +15,13 @@ run: expand = True
 [2]
 depends: executable('pandoc')
 output: f'{_input:n}.tex'
-run: expand = True
+run: docker_image = "gaow/debian-texlive", expand = True
      pandoc -t beamer --template {theme} -s -o {_output} {_input}
 
 [3]
 depends: executable('pdflatex')
 output: f'{_input:n}.pdf'
-run: expand = True
+run: docker_image = "gaow/debian-texlive", expand = True
      pdflatex -output-directory={_input:d} {_input} 
      pdflatex -output-directory={_input:d} {_input} 
      if [ -f "{_input:n}.bib" ]; then
