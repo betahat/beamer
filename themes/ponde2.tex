@@ -1,4 +1,15 @@
-\documentclass[professionalfont, 12pt, default]{beamer}
+\documentclass[
+    $if(aspectratio)$
+    aspectratio=$aspectratio$,
+    $endif$
+    professionalfont,
+    $if(fontsize)$
+    $fontsize$,
+    $else$
+    12pt,
+    $endif$
+    default]{beamer}
+
 % \usetheme{Antibes}
 % \usecolortheme{beaver}
 

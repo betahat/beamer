@@ -1,10 +1,14 @@
 \documentclass[
     $if(aspectratio)$
     aspectratio=$aspectratio$,
-    $else$
-    aspectratio=169,
     $endif$
-    professionalfont, $if(fontsize)$$fontsize$,$endif$ default]{beamer}
+    professionalfont,
+    $if(fontsize)$
+    $fontsize$,
+    $else$
+    12pt,
+    $endif$
+    default]{beamer}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}

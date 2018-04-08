@@ -8,7 +8,17 @@
 % \useoutertheme[subsection=false]{miniframes}
 % \bibliographystyle{apalike}
 % \setlength{\fboxrule}{1pt}
-\documentclass[professionalfont, 12pt, default]{beamer}
+\documentclass[
+    $if(aspectratio)$
+    aspectratio=$aspectratio$,
+    $endif$
+    professionalfont,
+    $if(fontsize)$
+    $fontsize$,
+    $else$
+    12pt,
+    $endif$
+    default]{beamer}
 % available at https://github.com/matze/mtheme
 % should be found in /usr/share/texlive/texmf-dist/tex/latex/beamertheme-metropolis
 \beamertemplatenavigationsymbolsempty
