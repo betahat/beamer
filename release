@@ -4,6 +4,7 @@
 parameter: theme = path('themes/metro.tex')
 parameter: notebook = path()
 parameter: bsize = 169
+parameter: purge = 0
 beamer = '' if f'{theme:b}' == 'labnotes.tex' else ('-t beamer -V aspectratio={bsize}' if bsize > 0 else '-t beamer')
 
 [1]
@@ -32,6 +33,6 @@ run: docker_image = "gaow/debian-texlive", expand = True
      fi
 
 [4]
-to_remove = paths([f'{_input:n}.' + x for x in ['aux', 'bbl', 'blg', 'log', 'out', 'nav', 'snm', 'toc', 'vrb', 'spl']] + [f'{_input:d}/_minted-{_input:bn}'])
+to_remove = paths([f'{_input:n}.' + x for x in ['aux', 'bbl', 'blg', 'log', 'out', 'nav', 'snm', 'toc', 'vrb', 'spl'] + (['md', 'tex'] if purge else [])] + [f'{_input:d}/_minted-{_input:bn}'])
 run: expand = True
   rm -rf {to_remove}
