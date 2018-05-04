@@ -5,7 +5,9 @@ parameter: theme = path('themes/metro.tex')
 parameter: notebook = path()
 parameter: bsize = 169
 parameter: purge = 0
-beamer = '' if f'{theme:b}' == 'labnotes.tex' else ('-t beamer -V aspectratio={bsize}' if bsize > 0 else '-t beamer')
+parameter: chinese = 0
+beamer = [f'{theme:b}' == 'labnotes.tex', '-t beamer', f'-V aspectratio={bsize}' if bsize > 0 else '', f'-V chinese={chinese}' if chinese else '']
+beamer = ' '.join(beamer) if beamer[0] else ''
 
 [1]
 depends: Py_Module('ipyrmd')
