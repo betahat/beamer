@@ -5,13 +5,15 @@ parameter: theme = path('themes/metro.tex')
 parameter: notebook = path()
 parameter: bsize = 169
 parameter: purge = 0
-beamer = '' if f'{theme:b}' == 'labnotes.tex' else ('-t beamer -V aspectratio={bsize}' if bsize > 0 else '-t beamer')
+parameter: chinese = 0
+beamer = [f'{theme:b}' == 'labnotes.tex', '-t beamer', f'-V aspectratio={bsize}' if bsize > 0 else '', f'-V chinese={chinese}' if chinese else '']
+beamer = ' '.join(beamer[1:]) if not beamer[0] else ''
 
 [1]
 depends: Py_Module('ipyrmd')
 fail_if(not notebook.is_file(), msg = 'Need input parameter ``--notebook``')
 input: notebook
-output: f'{_input:n}.md' if beamer else f'{_input:n}.print.md'
+output: f'{_input:n}.md' if len(beamer) else f'{_input:n}.print.md'
 run: expand = True
      ipyrmd --from ipynb --to Rmd -y -o {_output} {_input}
 
