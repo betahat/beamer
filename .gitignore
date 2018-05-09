@@ -1,1 +1,4 @@
-tmp.*
+*.md
+*.tex
+*.pdf
+themes/auto
