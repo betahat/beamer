@@ -125,9 +125,13 @@ seq 1 100 | factor | awk 'NF==2{print $2}'
 main :: IO ()
 ```
 
-```python
-if __name__ == "__main__":
-  pass
+```r
+get_bf = function(ns, n) {
+	ns0 = c(ns[1] + ns[3], ns[2] + ns[4])
+	ps0 = ns0 / (n * 2); ps = ns / n
+	lbf = sum(ns * log(ps)) - sum(ns0 * log(ps0)) 
+	exp(lbf)
+}
 ```
 
 ## embbed \TeX
