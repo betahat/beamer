@@ -13,21 +13,21 @@ beamer = ' '.join(beamer[1:]) if not beamer[0] else ''
 depends: Py_Module('sos_notebook', autoinstall='sos-notebook')
 fail_if(not notebook.is_file(), msg = 'Need input parameter ``--notebook``')
 input: notebook
-output: f'{_input:bn}.md' if len(beamer) else f'{_input:bn}.print.md'
-bash: expand = True
+output: f'{notebook:d}/{_input:bn}.md' if len(beamer) else f'{notebook:d}/{_input:bn}.print.md'
+bash: expand = True, workdir = f'{notebook:d}'
      sos convert {_input} {_output}
      sed -i '/./,$!d' {_output} # delete empty lines at top of file
 
 [2]
 depends: executable('pandoc')
 output: f'{_input:n}.tex'
-bash: container = "gaow/debian-texlive", expand = True
-     pandoc {beamer} --template {theme} -s -o {_output} {_input}
+bash: container = "gaow/debian-texlive", expand = True, volumes = {f'{notebook:d}':f'{notebook:d}'}
+     pandoc {beamer} --template {theme:a} -s -o {_output} {_input}
 
 [3]
 depends: executable('pdflatex')
 output: f'{_input:n}.pdf'
-bash: container = "gaow/debian-texlive", expand = True
+bash: container = "gaow/debian-texlive", expand = True, workdir = f'{notebook:d}'
      pdflatex -shell-escape -output-directory={_input:d} {_input}
      pdflatex -shell-escape -output-directory={_input:d} {_input}
      if [ -f "{_input:n}.bib" ]; then
@@ -37,5 +37,5 @@ bash: container = "gaow/debian-texlive", expand = True
 
 [4]
 to_remove = paths([f'{_input:n}.' + x for x in ['aux', 'bbl', 'blg', 'log', 'out', 'nav', 'snm', 'toc', 'vrb', 'spl'] + (['md', 'tex'] if purge else [])] + [f'{_input:d}/_minted-{_input:bn}'])
-bash: expand = True
+bash: expand = True, workdir = f'{notebook:d}'
   rm -rf {to_remove}
